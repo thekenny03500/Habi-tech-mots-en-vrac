@@ -1,0 +1,19 @@
+{
+  "name": "habi-tech",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "build": {
+    "appId": "com.habite.tech",
+    "productName": "Habi-tech"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^40.2.1"
+  }
+}
