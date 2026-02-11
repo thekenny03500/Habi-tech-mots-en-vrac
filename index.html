@@ -43,6 +43,13 @@
         button.fait {
             background-color: rgb(13, 181, 75);
         }
+
+        span.fait {
+            text-decoration: line-through;
+            text-decoration-thickness: 3px;
+            opacity: 0.5;
+            transition: opacity 0.3s, text-decoration 0.3s;
+        }
     </style>
 </head>
 
@@ -67,15 +74,16 @@
                     const textTaper = document.getElementById('entreMot').value.trim();
                     if (!!textTaper)
                     {
-                        listeMots.push(textTaper);
                         const bouton = document.createElement('button');
                         bouton.textContent = document.getElementById('entreMot').value;
                         document.getElementById('entreMot').value = "";
-                        placeWord("Screen", textTaper)
+                        const leMotDuScreen = placeWord("Screen", textTaper)
                         bouton.addEventListener('click', () => {
                             bouton.classList.add("fait");
+                            leMotDuScreen.classList.add("fait");
                         });
                         document.getElementById('liste').appendChild(bouton);
+                        listeMots.push(textTaper);
                     }
                 }
             }
@@ -128,6 +136,7 @@
             }
 
             if (!ok) container.removeChild(el);
+            return el;
         }
     </script>
 </body>
