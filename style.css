@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+html, body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.gridApp {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 150px auto;
+    grid-auto-rows: auto 50px;
+    grid-gap: 0px;
+}
+
+div#liste {
+    background-color: rgb(121, 126, 133);
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+input#entreMot {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+button.fait {
+    background-color: rgb(13, 181, 75);
+}
+
+:root{
+  --ratio: 1.35;
+  --bleuHabites: oklch(0.287 0.0742 270.58);
+  --tailleItem: 15vw;
+}
+
+div#Screen {
+    grid-column: 2;
+    grid-row: 1/3;
+    font-family: "Courier Prime", monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 10rem;
+    margin: 0;
+    line-height: 1;
+    background-color: var(--bleuHabites);
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(12, calc(1280/12)px);
+  grid-template-rows: repeat(12, calc(720/12)px);
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.item{
+  container-name: test;
+  container-type: inline-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tailleItem);
+  
+  &.pos1{grid-area: 2 / 1 / 4 / 3;}
+  &.pos2{grid-area: 3 / 5 / 5 / 7;}
+  &.pos3{grid-area: 1 / 7 / 3 / 9;}
+  &.pos4{grid-area: 2 / 10 / 4 / 12;}
+  &.pos5{grid-area: 5 / 2 / 7 / 4;}
+  &.pos6{grid-area: 7 / 4 / 10 / 6;}
+  &.pos7{grid-area: 5 / 8 / 7 / 10;}
+  &.pos8{grid-area: 6 / 11 / 8 / 13;}
+  &.pos9{grid-area: 10 / 1 / 12 / 3;}
+  &.pos10{grid-area: 11 / 5 / 13 / 7;}
+  &.pos11{grid-area: 8 / 7 / 10 / 9;}
+  &.pos12{grid-area: 10 / 10 / 12 / 12;}
+}
+
+@container (width > 0){
+  .texte{
+    color: white;
+    font-size: calc((100cqw / 20) * var(--ratio));
+    word-break:break-word;
+    overflow: hidden;
+    text-align: center;
+    width: 100%;
+    
+    &.barre{
+      opacity: .2;
+      text-decoration: line-through;
+      filter: blur(5px);
+    }
+  }
+  .nb1 {
+    font-size: calc((100cqw / 1) * var(--ratio));
+  }
+  .nb2 {
+    font-size: calc((100cqw / 2) * var(--ratio));
+  }
+  .nb3 {
+    font-size: calc((100cqw / 3) * var(--ratio));
+  }
+  .nb4 {
+    font-size: calc((100cqw / 4) * var(--ratio));
+  }
+  .nb5 {
+    font-size: calc((100cqw / 5) * var(--ratio));
+  }
+  .nb6 {
+    font-size: calc((100cqw / 6) * var(--ratio));
+  }
+  .nb7 {
+    font-size: calc((100cqw / 7) * var(--ratio));
+  }
+  .nb8 {
+    font-size: calc((100cqw / 8) * var(--ratio));
+  }
+  .nb9 {
+    font-size: calc((100cqw / 9) * var(--ratio));
+  }
+  .nb10 {
+    font-size: calc((100cqw / 10) * var(--ratio));
+  }
+  .nb11 {
+    font-size: calc((100cqw / 11) * var(--ratio));
+  }
+  .nb12 {
+    font-size: calc((100cqw / 12) * var(--ratio));
+  }
+  .nb13 {
+    font-size: calc((100cqw / 13) * var(--ratio));
+  }
+  .nb14 {
+    font-size: calc((100cqw / 14) * var(--ratio));
+  }
+  .nb15 {
+    font-size: calc((100cqw / 15) * var(--ratio));
+  }
+  .nb16 {
+    font-size: calc((100cqw / 16) * var(--ratio));
+  }
+  .nb17 {
+    font-size: calc((100cqw / 17) * var(--ratio));
+  }
+  .nb18 {
+    font-size: calc((100cqw / 18) * var(--ratio));
+  }
+  .nb19 {
+    font-size: calc((100cqw / 19) * var(--ratio));
+  }
+  .nb20 {
+    font-size: calc((100cqw / 20) * var(--ratio));
+  }
+  .nb21 {
+    font-size: calc((100cqw / 21) * var(--ratio));
+  }
+  .nb22 {
+    font-size: calc((100cqw / 22) * var(--ratio));
+  }
+  .nb23 {
+    font-size: calc((100cqw / 23) * var(--ratio));
+  }
+  .nb24 {
+    font-size: calc((100cqw / 24) * var(--ratio));
+  }
+  .nb25 {
+    font-size: calc((100cqw / 25) * var(--ratio));
+  }
+  .nb26 {
+    font-size: calc((100cqw / 25) * var(--ratio));
+  }
+
+}

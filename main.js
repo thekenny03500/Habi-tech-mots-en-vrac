@@ -11,8 +11,8 @@ const createWindow = () =>
         alwaysOnTop: true,
         resizable: false,
         focusable: true,
-        width: 960 + 150,
-        height: 595,
+        width: 1280 + 150,
+        height: 720+50,
     })
 
     mainWindow.loadFile('index.html')
