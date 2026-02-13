@@ -4,77 +4,103 @@
 <head>
     <meta charset="UTF-8">
     <title>Habi-tech</title>
-    <link href="./style.css"  rel="stylesheet" type="text/css" />
+    <link href="./style.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
     <div class="gridApp">
         <div id="liste">
-
+            <button id="Reset">Reset</button>
+            <div id="nbMot">0/12</div>
         </div>
-        <input id="entreMot" type="text">
+        <input id="entreMot" type="text" placeholder="Coucou">
         <div id="Screen" class="grid">
 
         </div>
     </div>
 
     <script>
-        const listeMots = []
+        let listePosUsed = [];
+        const listeTexte = [];
         document.getElementById('entreMot').addEventListener("keydown", (e) => {
             if (e.key === 'Enter') 
             {
-                if (listeMots.length < 12)
+                if (listePosUsed.length < 12)
                 {
                     const textTaper = document.getElementById('entreMot').value.trim();
                     if (!!textTaper)
                     {
+                        const divBoutonMot = document.createElement('div');
+                        document.getElementById('liste').appendChild(divBoutonMot);
+                        divBoutonMot.classList.add("divBouton");
+
                         const bouton = document.createElement('button');
                         bouton.textContent = document.getElementById('entreMot').value;
+                        bouton.classList.add("boutonMot");
+                        divBoutonMot.appendChild(bouton);
+
+                        const boutonSuppr = document.createElement('button');
+                        boutonSuppr.textContent = "X";
+                        boutonSuppr.classList.add("boutonMotSuppr");
+                        divBoutonMot.appendChild(boutonSuppr);
+
                         document.getElementById('entreMot').value = "";
 
-                        const pos = placeWord("Screen", textTaper)
+                        let pos;
+                        do
+                        {
+                            pos = Math.floor(Math.random() * 12);
+                        } while (listePosUsed.some(m => m == pos))
+                        listePosUsed.push(pos);
+                        document.getElementById('nbMot').innerText = listePosUsed.length + "/12";
+
+                        // Creation conteneur
+                        const angle = Math.random() * 70 - 35;
+                        const contentDiv = document.createElement('div');
+                        contentDiv.classList.add('item', `pos${pos + 1}`);
+                        contentDiv.style.cssText = `transform:rotate(${angle}deg);`;
+
+                        // Creation Texte
+                        const textDiv = document.createElement('div')
+                        let nb = textTaper.length;
+                        if (textTaper.length < 6) nb = "Min";
+                        if (textTaper.length > 15) nb = "Over";
+                        textDiv.classList.add('texte', `nb${nb}`);
+                        contentDiv.appendChild(textDiv);
+                        textDiv.innerText = textTaper;
+
+                        let tempoConteneur = { text: divBoutonMot, content: contentDiv };
+                        listeTexte.push(tempoConteneur);
+
+                        document.getElementById("Screen").appendChild(contentDiv);
 
                         bouton.addEventListener('click', () => {
                             bouton.classList.add("fait");
-                            listeMots[pos].textDiv.classList.add("barre");
+                            textDiv.classList.add("barre");
                         });
 
-                        document.getElementById('liste').appendChild(bouton);
+                        boutonSuppr.addEventListener('click', () => {
+                            divBoutonMot.remove();
+                            contentDiv.remove();
+                            listePosUsed.splice(listePosUsed.indexOf(pos), 1);
+                            listeTexte.splice(listeTexte.indexOf(tempoConteneur), 1);
+                            console.log(listePosUsed);
+                            console.log(listeTexte);
+                            document.getElementById('nbMot').innerText = listePosUsed.length + "/12";
+                        });
                     }
                 }
             }
         });
-        
-        function placeWord(containerId, word) {
-            let pos;
-            do
-            {
-                pos = Math.floor(Math.random() * 12);
-                console.log("Gen -> "+pos);
-            }while(listeMots.some(m => m.pos == pos))
-             let leMot = {
-                pos:pos,
-                word : word
-            }
-            listeMots.push(leMot);
+        document.getElementById('Reset').addEventListener('click', () => {
+            listePosUsed = [];
+            listeTexte.forEach((item) => {
+                item.text.remove();
+                item.content.remove();
+                document.getElementById('nbMot').innerText = "0/12";
+            });
+        });
 
-            // Creation conteneur
-            const angle = Math.random() * 70 - 35;
-            const contentDiv = document.createElement('div');
-            contentDiv.classList.add('item',`pos${pos+1}`);
-            contentDiv.style.cssText = `transform:rotate(${angle}deg);`;
-            leMot.contentDiv = contentDiv
-
-            // Creation Texte
-            const textDiv = document.createElement('div')
-            textDiv.classList.add('texte',`nb${word.length}`);
-            contentDiv.appendChild(textDiv);
-            textDiv.innerText = word;
-            leMot.textDiv = textDiv
-
-            document.getElementById(containerId).appendChild(contentDiv);
-            return pos;
-        }
     </script>
 </body>
 

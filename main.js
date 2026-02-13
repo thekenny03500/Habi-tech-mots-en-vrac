@@ -12,7 +12,7 @@ const createWindow = () =>
         resizable: false,
         focusable: true,
         width: 1280 + 150,
-        height: 720+50,
+        height: 720 + 52,
     })
 
     mainWindow.loadFile('index.html')
