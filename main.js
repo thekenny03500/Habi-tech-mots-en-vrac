@@ -1,6 +1,4 @@
-const { app, BrowserWindow, Tray, Menu, nativeImage, ipcMain } = require('electron')
-const path = require('path');
-
+const { app, BrowserWindow } = require('electron')
 
 let mainWindow;
 const createWindow = () =>
@@ -22,5 +20,4 @@ const createWindow = () =>
 app.whenReady().then(() =>
 {
     createWindow();
-    //mainWindow.webContents.openDevTools({ mode: 'detach' });
 })

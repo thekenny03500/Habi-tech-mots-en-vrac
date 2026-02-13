@@ -1,19 +1,33 @@
 {
-  "name": "habi-tech",
+  "name": "habi-tech-mot-en-vrac",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "keywords": [],
-  "author": "",
+  "author": "Aimeric-thomas DALVAI",
   "build": {
-    "appId": "com.habite.tech",
-    "productName": "Habi-tech"
+    "productName": "Habi-tech - Mots en vrac",
+    "appId": "com.habitech.motsenvrac",
+    "win": {
+      "target": "portable",
+      "icon": "Logo-Habites.ico"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-Portable.exe",
+      "unicode": true
+    }
   },
+  "files": [
+    "**/*",
+    "!node_modules/**/*"
+  ],
   "license": "ISC",
   "devDependencies": {
-    "electron": "^40.2.1"
+    "electron": "^40.2.1",
+    "electron-builder": "^26.7.0"
   }
 }
