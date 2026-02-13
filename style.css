@@ -1,17 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-html,
-body {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  background-color: var(--bleuHabites);
+:root {
+  --ratio: 1.35;
+  --tailleItem: 15vw;
 }
 
-.gridApp {
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+html{
+  width: 1430px;
+  height: 720px;
+}
+body {
   overflow: hidden;
-  height: 100%;
   display: grid;
   grid-template-columns: 150px auto;
   grid-auto-rows: auto 50px;
@@ -43,16 +46,6 @@ input#entreMot {
   grid-row: 2;
 }
 
-button.fait {
-  background-color: rgb(13, 181, 75);
-}
-
-:root {
-  --ratio: 1.35;
-  --bleuHabites: oklch(0.287 0.0742 270.58);
-  --tailleItem: 15vw;
-}
-
 div#Screen {
   grid-column: 2;
   grid-row: 1/3;
@@ -62,28 +55,40 @@ div#Screen {
   font-size: 10rem;
   margin: 0;
   line-height: 1;
-  background-color: var(--bleuHabites);
 }
 
 .divBouton {
   display: flex;
+  width: 100%;   
 }
 
 .boutonMot {
-  width: -webkit-fill-available;
+  width: 100%;    
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.boutonMot:hover {
+  text-decoration: line-through;
+  background-color: #cfcfcf;
+}
+.boutonMot.fait {
+  background-color: rgb(13, 181, 75);
+  text-decoration: line-through;
 }
 
 .boutonMotSuppr {
   background-color: rgb(255, 11, 11);
   color: #FFF;
   font-weight: bold;
+  margin: 0;
+  padding: 0px 4px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 98px);
-  padding: 50px;
-  grid-template-rows: repeat(12, 51px);
+  grid-template-rows: repeat(12, 52px);
+  padding: 48px 52px;
   gap: 0px;
   box-sizing: border-box;
 }
@@ -156,7 +161,6 @@ div#Screen {
     &.barre {
       opacity: .2;
       text-decoration: line-through;
-      filter: blur(5px);
     }
   }
 
@@ -205,6 +209,6 @@ div#Screen {
   }
 
   .nbOver {
-    font-size: calc((100cqw / 16) * var(--ratio));
+    font-size: calc((100cqw / 14) * var(--ratio));
   }
 }

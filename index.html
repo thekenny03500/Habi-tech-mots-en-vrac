@@ -8,16 +8,12 @@
 </head>
 
 <body>
-    <div class="gridApp">
-        <div id="liste">
-            <button id="Reset">Reset</button>
-            <div id="nbMot">0/12</div>
-        </div>
-        <input id="entreMot" type="text" placeholder="Coucou">
-        <div id="Screen" class="grid">
-
-        </div>
+    <div id="liste">
+        <button id="Reset">Reset</button>
+        <div id="nbMot">0/12</div>
     </div>
+    <input id="entreMot" type="text" placeholder="Coucou">
+    <div id="Screen" class="grid"></div>
 
     <script>
         let listePosUsed = [];
@@ -40,7 +36,7 @@
                         divBoutonMot.appendChild(bouton);
 
                         const boutonSuppr = document.createElement('button');
-                        boutonSuppr.textContent = "X";
+                        boutonSuppr.textContent = "🗑️";
                         boutonSuppr.classList.add("boutonMotSuppr");
                         divBoutonMot.appendChild(boutonSuppr);
 
@@ -55,7 +51,8 @@
                         document.getElementById('nbMot').innerText = listePosUsed.length + "/12";
 
                         // Creation conteneur
-                        const angle = Math.random() * 70 - 35;
+                        const ANGLE_MAX = 15
+                        const angle = Math.random() * (ANGLE_MAX*2) - ANGLE_MAX;
                         const contentDiv = document.createElement('div');
                         contentDiv.classList.add('item', `pos${pos + 1}`);
                         contentDiv.style.cssText = `transform:rotate(${angle}deg);`;
@@ -74,9 +71,20 @@
 
                         document.getElementById("Screen").appendChild(contentDiv);
 
+                        let IsFais = false;
+
                         bouton.addEventListener('click', () => {
-                            bouton.classList.add("fait");
-                            textDiv.classList.add("barre");
+                            if(IsFais)
+                            {
+                                bouton.classList.remove("fait");
+                                textDiv.classList.remove("barre");
+                            }
+                            else
+                            {
+                                bouton.classList.add("fait");
+                                textDiv.classList.add("barre");
+                            }
+                            IsFais = !IsFais;
                         });
 
                         boutonSuppr.addEventListener('click', () => {
