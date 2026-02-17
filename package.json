@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --linux --win",
+    "build_W": "electron-builder --win",
+    "build_L": "electron-builder --linux"
   },
   "keywords": [],
   "author": "Aimeric-thomas DALVAI",
@@ -15,6 +17,15 @@
     "win": {
       "target": "portable",
       "icon": "Logo-Habites.ico"
+    },
+    "linux": {
+      "icon": "Logo-Habites.png",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": ["x64"]
+        }
+      ]
     },
     "portable": {
       "artifactName": "${productName}-${version}-Portable.exe",
