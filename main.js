@@ -9,13 +9,14 @@ const createWindow = () =>
     mainWindow = new BrowserWindow({
         frame: true,
         resizable: false,
-        backgroundColor:"#1d274f",
+        backgroundColor: "#1d274f",
     })
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadFile('index.html')
     // ← Force la taille du contenu APRÈS le chargement
-    mainWindow.webContents.on('did-finish-load', () => {
-        mainWindow.setContentSize(CONTENT_WIDTH+150, CONTENT_HEIGHT);
+    mainWindow.webContents.on('did-finish-load', () =>
+    {
+        mainWindow.setContentSize(CONTENT_WIDTH + 150, CONTENT_HEIGHT);
     });
 }
 
@@ -24,4 +25,5 @@ app.whenReady().then(() =>
 {
     createWindow();
     //mainWindow.webContents.openDevTools();
-})
+});
+app.disableHardwareAcceleration();
