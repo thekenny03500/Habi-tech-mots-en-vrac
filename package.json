@@ -1,7 +1,7 @@
 {
   "name": "habi-tech-mot-en-vrac",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Une application pour générer des mots en vrac",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -23,7 +23,9 @@
       "target": [
         {
           "target": "AppImage",
-          "arch": ["x64"]
+          "arch": [
+            "x64"
+          ]
         }
       ]
     },
