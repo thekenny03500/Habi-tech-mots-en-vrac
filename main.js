@@ -1,7 +1,8 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
+const path = require('path');
+const EWindowSize = require('./model/windowSize');
 
-const CONTENT_WIDTH = 1280;
-const CONTENT_HEIGHT = 720;
+const DEFAULT_SIZE = EWindowSize[ 0 ];
 
 let mainWindow;
 const createWindow = () =>
@@ -10,20 +11,37 @@ const createWindow = () =>
         frame: true,
         resizable: false,
         backgroundColor: "#1d274f",
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            spellcheck: false,
+            backgroundThrottling: false,
+            enableRemoteModule: false,
+            preload: path.join(__dirname, 'preload.js'),
+        }
     })
     mainWindow.setMenuBarVisibility(false);
     mainWindow.loadFile('index.html')
-    // ← Force la taille du contenu APRÈS le chargement
+    // Force la taille du contenu APRÈS le chargement
     mainWindow.webContents.on('did-finish-load', () =>
     {
-        mainWindow.setContentSize(CONTENT_WIDTH + 150, CONTENT_HEIGHT);
+        mainWindow.setContentSize(DEFAULT_SIZE.width + 150, DEFAULT_SIZE.height);
     });
+    //mainWindow.webContents.openDevTools();
 }
 
-// Demarrage de l'appliation
-app.whenReady().then(() =>
+// ---- Ipc ---- //
+ipcMain.on('resize-window', (_, windowSize) =>
 {
-    createWindow();
-    //mainWindow.webContents.openDevTools();
+    if (mainWindow) {
+        const choise = EWindowSize[ windowSize ];
+        if (choise) {
+            mainWindow.setSize(choise.width, choise.height);
+            mainWindow.center();
+        }
+    }
 });
+
+// ---- Demarrage de l'appliation ---- //
+app.whenReady().then(createWindow);
 app.disableHardwareAcceleration();

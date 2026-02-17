@@ -9,12 +9,15 @@
 
 <body>
     <div id="liste">
+        <select id="windowSize">
+        </select>
         <button id="Reset">Reset</button>
         <div id="nbMot">0/12</div>
     </div>
     <input id="entreMot" type="text" placeholder="Coucou">
     <div id="Screen" class="grid"></div>
 
+    <script src="./model/windowSize.js"></script>
     <script>
         let listePosUsed = [];
         const listeTexte = [];
@@ -52,7 +55,7 @@
 
                         // Creation conteneur
                         const ANGLE_MAX = 15
-                        const angle = Math.random() * (ANGLE_MAX*2) - ANGLE_MAX;
+                        const angle = Math.random() * (ANGLE_MAX * 2) - ANGLE_MAX;
                         const contentDiv = document.createElement('div');
                         contentDiv.classList.add('item', `pos${pos + 1}`);
                         contentDiv.style.cssText = `transform:rotate(${angle}deg);`;
@@ -74,7 +77,7 @@
                         let IsFais = false;
 
                         bouton.addEventListener('click', () => {
-                            if(IsFais)
+                            if (IsFais)
                             {
                                 bouton.classList.remove("fait");
                                 textDiv.classList.remove("barre");
@@ -109,6 +112,22 @@
             });
         });
 
+        // ---- INIT ---- //
+        (async function () {
+            const select = document.getElementById('windowSize');
+
+            Object.values(EWindowSize).forEach((size, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = size.label;
+                select.appendChild(option);
+            });
+
+            select.addEventListener('change', () => {
+                const selectedKey = select.value;
+                window.electronAPI.resizeWindow(selectedKey);
+            });
+        })();
     </script>
 </body>
 
