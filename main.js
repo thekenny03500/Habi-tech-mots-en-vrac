@@ -27,7 +27,7 @@ const createWindow = () =>
     {
         mainWindow.setContentSize(DEFAULT_SIZE.width + 150, DEFAULT_SIZE.height);
     });
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 }
 
 // ---- Ipc ---- //
@@ -36,7 +36,7 @@ ipcMain.on('resize-window', (_, windowSize) =>
     if (mainWindow) {
         const choise = EWindowSize[ windowSize ];
         if (choise) {
-            mainWindow.setSize(choise.width, choise.height);
+            mainWindow.setContentSize(choise.width + 150, choise.height);
             mainWindow.center();
         }
     }
