@@ -1,6 +1,6 @@
 {
   "name": "habi-tech-mot-en-vrac",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Une application pour générer des mots en vrac",
   "main": "main.js",
   "scripts": {
@@ -16,10 +16,10 @@
     "appId": "com.habitech.motsenvrac",
     "win": {
       "target": "portable",
-      "icon": "Logo-Habites.ico"
+      "icon": "icone/Logo-Habites.ico"
     },
     "linux": {
-      "icon": "Logo-Habites.png",
+      "icon": "icone/Logo-Habites.png",
       "target": [
         {
           "target": "AppImage",
