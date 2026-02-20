@@ -10,7 +10,7 @@ const createWindow = () =>
     mainWindow = new BrowserWindow({
         frame: true,
         resizable: false,
-        backgroundColor: "#1d274f",
+        backgroundColor: "#6270a4",
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -27,7 +27,9 @@ const createWindow = () =>
     {
         mainWindow.setContentSize(DEFAULT_SIZE.width + 150, DEFAULT_SIZE.height);
     });
-    mainWindow.webContents.openDevTools();
+    if (!app.isPackaged) {
+        mainWindow.webContents.openDevTools();
+    }
 }
 
 // ---- Ipc ---- //

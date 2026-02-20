@@ -2,14 +2,12 @@
 :root {
   --ratio: 1.5;
   --rouge: rgb(238, 64, 64);
+  --ScreenColor : rgb(29, 39, 79);
 }
 
 html, body {
   padding: 0;
   margin: 0;
-}
-
-html{
   width: 100%;
   height: 100%;
 }
@@ -17,81 +15,137 @@ body {
   overflow: hidden;
   display: grid;
   grid-template-columns: 150px auto;
-  grid-auto-rows: auto 50px;
-  grid-gap: 0px;
-  height: 100%;
-}
+  grid-auto-rows: min-content 1fr 35px;
+  grid-gap: 10px 0px;
+  &.MotEnVrac{
+    #fleche_abcd{
+      display: none;
+    }
+    #ABCD_screen{
+      display: none;
+    }
+    #ABCD_screen_P{
+      display: none;
+    }
+    #ABCD_screen_S{
+      display: none;
+    }
+    #listeAbcd{
+      display: none;
+    }
+  }
+  &.Abecedaire{
+    #liste{
+      display: none;
+    }
+    input#entreMot{
+      display: none;
+    }
+    #fleche_abcd{
+      display: flex;
+    }
 
-#nbMot {
-  text-align: center;
-  font-weight: bold;
+    #flecheGauche, #flecheDroite{
+      font-size: 20px;
+      width: 100%;
+    }
+  }
 }
-
-#Reset {
-  background-color: var(--rouge);
-  margin-bottom: 50px;
-  font-weight: bold;
-  color: #FFF;
-}
-
-div#liste {
-  background-color: #6270a4;
+   
+/****** Tool ******/
+div#tool{
   grid-column: 1;
   grid-row: 1;
   display: flex;
   flex-direction: column;
+
+  span{
+    font-weight: bold;
+  }
+
+  #Reset {
+    background-color: var(--rouge);
+    font-weight: bold;
+    color: #FFF;
+  }
+
 }
 
-input#entreMot {
+/****** Liste ******/
+div#listeAbcd{
   grid-column: 1;
   grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
 }
 
+div#liste{
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+
+ #nbMot {
+    text-align: center;
+    font-weight: bold;
+  }
+
+
+  .divBouton {
+    display: flex;
+    width: 100%; 
+    
+    .boutonMot {
+      width: 100%;    
+      text-overflow: ellipsis;
+      overflow: hidden;
+      &:hover {
+        text-decoration: line-through;
+        background-color: #cfcfcf;
+      }
+      &.fait {
+        background-color: rgb(60, 208, 114);
+        text-decoration: line-through;
+      }
+    }
+    .boutonMotSuppr {
+      background-color: var(--rouge);
+      color: #FFF;
+      font-weight: bold;
+      margin: 0;
+      padding: 0px 4px;
+    }
+  }
+}
+
+/****** Input ******/
+input#entreMot, #fleche_abcd {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+/****** Screen ******/
 div#Screen {
+  background-color: var(--ScreenColor);
   grid-column: 2;
-  grid-row: 1/3;
+  grid-row: 1/4;
   font-family: "Courier Prime", monospace;
   font-weight: 700;
   text-transform: uppercase;
   font-size: 10rem;
   margin: 0;
   line-height: 1;
-}
 
-.divBouton {
-  display: flex;
-  width: 100%;   
-}
-
-.boutonMot {
-  width: 100%;    
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.boutonMot:hover {
-  text-decoration: line-through;
-  background-color: #cfcfcf;
-}
-.boutonMot.fait {
-  background-color: rgb(60, 208, 114);
-  text-decoration: line-through;
-}
-
-.boutonMotSuppr {
-  background-color: var(--rouge);
-  color: #FFF;
-  font-weight: bold;
-  margin: 0;
-  padding: 0px 4px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
-  padding: 5%;
-  gap: 0px;
-  box-sizing: border-box;
+  &.grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(12, 1fr);
+    padding: 5%;
+    gap: 0px;
+    box-sizing: border-box;
+  }
 }
 
 .item {
@@ -100,6 +154,18 @@ div#Screen {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &#ABCD_screen{
+    grid-area: 1 / 1 / 13 / 13;
+  }
+  &#ABCD_screen_P{
+    grid-area: 1 / 1 / 13 / 5;
+    opacity: .2;
+  }
+  &#ABCD_screen_S{
+    grid-area: 1 / 9 / 13 / 13;
+    opacity: .2;
+  }
 
   &.pos1 {
     grid-area: 2 / 1 / 4 / 3;
@@ -162,6 +228,10 @@ div#Screen {
       opacity: .2;
       text-decoration: line-through;
     }
+  }
+
+  .nbAbdc {
+    font-size: calc((100cqw / 3) * var(--ratio));
   }
 
   .nbMin {

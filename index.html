@@ -7,22 +7,94 @@
     <link href="./style.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
-    <div id="liste">
-        <select id="windowSize">
+<body class="MotEnVrac">
+    <div id="tool">
+        <span>Resolution :</span>
+        <select id="windowSize"></select>
+        <span>Mode :</span>
+        <select id="Mode">
+            <option value="MotEnVrac">Mot en vrac</option>
+            <option value="Abecedaire">Abécédaire</option>
         </select>
         <button id="Reset">Reset</button>
+    </div>
+    <div id="liste">
         <div id="nbMot">0/12</div>
     </div>
+    <div id="listeAbcd">
+    </div>
     <input id="entreMot" type="text" placeholder="Coucou">
-    <div id="Screen" class="grid"></div>
+    <div id="fleche_abcd">
+        <button id="flecheGauche">🠔</button>
+        <button id="flecheDroite">🠖</button>
+    </div>
+    
+    <div id="Screen" class="grid">
+        <div id="ABCD_screen_P" class="item"><div id="ABCD_Lettre_P" class="texte nbAbdc">Z</div></div>
+        <div id="ABCD_screen" class="item"><div id="ABCD_Lettre" class="texte nbAbdc">A</div></div>
+        <div id="ABCD_screen_S" class="item"><div id="ABCD_Lettre_S" class="texte nbAbdc">B</div></div>
+    </div>
 
     <script src="./model/windowSize.js"></script>
     <script>
+
+        // ---- DATA ---- //
+        let isModeAbecedaire = false;
+
         let listePosUsed = [];
         const listeTexte = [];
+        
+        // Ascii de 65 -> 90 = A -> Z
+        const listeLettre = Array.from({length: 26}, (_, i) => String.fromCharCode(i + 65));
+        let indexAbcd= 0;
+
+        // ---- INIT ---- //
+        // ---- resolution ---- //
+        const selectResolution = document.getElementById('windowSize');
+
+        Object.values(EWindowSize).forEach((size, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = size.label;
+            selectResolution.appendChild(option);
+        });
+
+        selectResolution.addEventListener('change', (event) => {
+            window.electronAPI.resizeWindow(event.target.value);
+        });
+
+        // ---- Mode ---- //
+        const selectMode = document.getElementById('Mode');
+
+        selectMode.addEventListener('change', (event) => {
+            document.body.classList.remove("MotEnVrac","Abecedaire");
+            document.body.classList.add(event.target.value);
+            reset();
+            isModeAbecedaire = event.target.value == "Abecedaire";
+        });
+
+        // ---- reset ---- //
+        function reset(){
+             if(isModeAbecedaire)
+            {
+                indexAbcd = 0;
+                majLettre();
+            }
+            else
+            {
+                listePosUsed = [];
+                listeTexte.forEach((item) => {
+                    item.text.remove();
+                    item.content.remove();
+                    document.getElementById('nbMot').innerText = "0/12";
+                });
+            }
+        }
+        document.getElementById('Reset').addEventListener('click', () => { reset(); });
+
+        // ---- Mot en vrac ---- //
         document.getElementById('entreMot').addEventListener("keydown", (e) => {
-            if (e.key === 'Enter') 
+            if (e.key === 'Enter' && !isModeAbecedaire) 
             {
                 if (listePosUsed.length < 12)
                 {
@@ -103,31 +175,66 @@
                 }
             }
         });
-        document.getElementById('Reset').addEventListener('click', () => {
-            listePosUsed = [];
-            listeTexte.forEach((item) => {
-                item.text.remove();
-                item.content.remove();
-                document.getElementById('nbMot').innerText = "0/12";
-            });
+        
+        // ---- abecedaire ---- //
+        const ABCD_Lettre = document.getElementById('ABCD_Lettre');
+        const ABCD_Lettre_P = document.getElementById('ABCD_Lettre_P');
+        const ABCD_Lettre_S = document.getElementById('ABCD_Lettre_S');
+        function majLettre()
+        {
+            ABCD_Lettre_P.innerText = listeLettre[IndexP(indexAbcd)];
+            ABCD_Lettre.innerText = listeLettre[indexAbcd];
+            ABCD_Lettre_S.innerText = listeLettre[IndexS(indexAbcd)];
+        }
+        function IndexP(index){
+            if(index == 0)
+                return listeLettre.length-1;
+            return index-1;
+        }
+        function IndexS(index){
+            if(index == listeLettre.length-1)
+                return 0;
+            return index+1;
+        }
+        function flecheGauche(){
+            if(isModeAbecedaire)
+            {
+                indexAbcd = IndexP(indexAbcd);
+                majLettre();
+            }
+        }
+        function flecheDroite(){
+            if(isModeAbecedaire)
+            {
+                indexAbcd = IndexS(indexAbcd);
+                majLettre();
+            }
+        }
+        document.getElementById('flecheGauche').addEventListener("click",()=> flecheGauche() );
+        document.getElementById('flecheDroite').addEventListener("click",()=> flecheDroite());
+        document.addEventListener("keydown", (event) => {
+            switch(event.key) {
+                case "ArrowLeft":
+                    flecheGauche();
+                    break;
+                case "ArrowRight":
+                    flecheDroite();
+                    break;
+            }
         });
-
-        // ---- INIT ---- //
-        (async function () {
-            const select = document.getElementById('windowSize');
-
-            Object.values(EWindowSize).forEach((size, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = size.label;
-                select.appendChild(option);
-            });
-
-            select.addEventListener('change', () => {
-                const selectedKey = select.value;
-                window.electronAPI.resizeWindow(selectedKey);
-            });
-        })();
+        
+        const listeAbcd = document.getElementById('listeAbcd');
+        listeLettre.forEach((item,index)=>{
+                const bouton = document.createElement('button');
+                bouton.textContent = item;
+                listeAbcd.appendChild(bouton);
+                bouton.addEventListener("click",()=> 
+                {
+                    indexAbcd = index;
+                    majLettre();
+                });
+});
+        
     </script>
 </body>
 
