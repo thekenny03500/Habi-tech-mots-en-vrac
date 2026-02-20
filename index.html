@@ -67,6 +67,7 @@
         const selectMode = document.getElementById('Mode');
 
         selectMode.addEventListener('change', (event) => {
+            event.target.blur();
             document.body.classList.remove("MotEnVrac","Abecedaire");
             document.body.classList.add(event.target.value);
             reset();
